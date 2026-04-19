@@ -14,6 +14,11 @@
       flex-direction: column;
     }
 
+    h1 {
+      margin-bottom: 20px;
+      color: #cc0000;
+    }
+
     .heart {
       width: 100px;
       height: 100px;
@@ -21,11 +26,13 @@
       position: relative;
       transform: rotate(-45deg);
       cursor: pointer;
-      transition: transform 0.3s ease;
+      animation: pulse 1.5s infinite;
     }
 
-    .heart:hover {
-      transform: rotate(-45deg) scale(1.1);
+    @keyframes pulse {
+      0% { transform: rotate(-45deg) scale(1); }
+      50% { transform: rotate(-45deg) scale(1.2); }
+      100% { transform: rotate(-45deg) scale(1); }
     }
 
     .heart::before,
@@ -52,25 +59,39 @@
       margin-top: 30px;
       font-size: 24px;
       color: #b30000;
-      opacity: 0;
-      transition: opacity 0.5s ease;
-    }
-
-    .show {
-      opacity: 1;
+      border-right: 2px solid #b30000;
+      white-space: nowrap;
+      overflow: hidden;
+      width: 0;
     }
   </style>
 </head>
 <body>
 
+  <h1>Click Me</h1>
+
   <div class="heart" onclick="revealMessage()"></div>
 
-  <div id="message" class="message">hey dewa, can i get head.</div>
+  <div id="message" class="message"></div>
 
   <script>
+    const text = "hello dewaaaaaaa...... can i get head please?";
+    let index = 0;
+
+    function typeWriter() {
+      if (index < text.length) {
+        document.getElementById("message").textContent += text.charAt(index);
+        index++;
+        setTimeout(typeWriter, 80);
+      }
+    }
+
     function revealMessage() {
       const msg = document.getElementById('message');
-      msg.classList.add('show');
+      msg.style.width = 'auto';
+      msg.textContent = '';
+      index = 0;
+      typeWriter();
     }
   </script>
 
